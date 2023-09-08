@@ -58,6 +58,14 @@ replace_in_place() {
     mv "${TEMPORARY_FILE}" "${FILE}"
 }
 
+remove_header() {
+    # remove first lines of instructions in the readme unrelated to the template to be used each week
+    TEMPORARY_FILE="${FILE}_without_problem_on_mac_os_x"
+
+    sed  '1,8d' <"${FILE}" >"${TEMPORARY_FILE}" # from the 1st to the 8th line
+    mv "${TEMPORARY_FILE}" "${FILE}"
+}
+
 main() {
     set -o errexit
     # set -o xtrace
@@ -71,6 +79,7 @@ main() {
 
     info "filling README with previous subject"
     replace_in_place "s/Ancien sujet/${LAST_SUBJECT}/" "${TODAY}/README.md"
+    remove_header
 }
 
 main

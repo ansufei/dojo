@@ -19,8 +19,19 @@ As the new space is pre-populated with a copy of the last value
 '''
 
 def calculate(input):
-    if input == '42':
-        return 42
-    elif input == '3 5':
-        return 5
-    return 4
+    queue = []
+    length_input = len(input)
+    counter = 0
+    while counter < length_input:
+        if input[0] == ' ':
+            queue.append(input[0])
+        else:
+            if queue:
+                queue[-1] += input[0]
+            else:
+                queue.append(input[0])
+        input = input[1:]
+        counter += 1
+    return int(queue[-1])
+
+calculate('3 5')

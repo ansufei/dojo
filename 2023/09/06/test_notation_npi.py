@@ -1,9 +1,5 @@
 from notation_npi import calculate
 
-# '4' should return 4
-# '42' should return 42
-# '3 5' should return 5
-# '50~' should return -50
 # '3 4+' should return 7
 # '4 5*' should return 20
 # '6 2/' should return 3 (i.e. integer division)
@@ -13,6 +9,8 @@ from notation_npi import calculate
 # 3 4x 5 6 x + should return 42
 # '1 2 3+*/ should return 0
 # '3 6 2/*+ should return 9
+# '-' should return 0
+# '~50' should return 0
 
 '''LOGIC
 The space pushes to a different place in memory. 
@@ -21,10 +19,16 @@ As the new space is pre-populated with a copy of the last value
 '''
 
 def test_digit_string_returns_the_digit():
-    assert calculate('4')==4
+    assert calculate('4') == 4
 
 def test_single_operand_string_returns_operand():
-    assert calculate('42')==42
+    assert calculate('42') == 42
 
 def test_two_operands_with_space_returns_last_one():
-    assert calculate('3 5')==5
+    assert calculate('3 5') == 5
+
+def test_reverse_operateur():
+    assert calculate('50~') == -50
+
+def test_addition_two_operands():
+    assert calculate('3 4+') == 7

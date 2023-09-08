@@ -1,7 +1,3 @@
-# '4' should return 4
-# '42' should return 42
-# '3 5' should return 5
-# '50~' should return -50
 # '3 4+' should return 7
 # '4 5*' should return 20
 # '6 2/' should return 3 (i.e. integer division)
@@ -11,6 +7,8 @@
 # 3 4x 5 6 x + should return 42
 # '1 2 3+*/ should return 0
 # '3 6 2/*+ should return 9
+# '-' should return 0
+# '~50' should return 0
 
 '''LOGIC
 The space pushes to a different place in memory. 
@@ -25,6 +23,14 @@ def calculate(input):
     while counter < length_input:
         if input[0] == ' ':
             queue.append(input[0])
+        elif input[0] == '~':
+            if queue:
+                queue[-1] = '-' + queue[-1]
+            else:
+                queue[0] = 0
+        elif input[0] == '+':
+            if len(queue) > 1:
+                queue[-1] = queue[-2] + ' +' + queue[-1]            
         else:
             if queue:
                 queue[-1] += input[0]
@@ -32,6 +38,4 @@ def calculate(input):
                 queue.append(input[0])
         input = input[1:]
         counter += 1
-    return int(queue[-1])
-
-calculate('3 5')
+    return eval(queue[-1])

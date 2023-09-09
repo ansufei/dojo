@@ -1,12 +1,9 @@
 from notation_npi import calculate
-
-# '3 4+' should return 7
-# '4 5*' should return 20
 # '6 2/' should return 3 (i.e. integer division)
 # '1 2+ 5-' should return -2
 # '1 2 3-' should return -1
 # '1 2 3+- should return -4
-# 3 4x 5 6 x + should return 42
+# 3 4x 5 6x+ should return 42
 # '1 2 3+*/ should return 0
 # '3 6 2/*+ should return 9
 # '-' should return 0
@@ -32,3 +29,10 @@ def test_reverse_operateur():
 
 def test_addition_two_operands():
     assert calculate('3 4+') == 7
+
+def test_multiplication_two_operands():
+    assert calculate('4 5*') == 20
+
+def test_division_two_operands():
+    assert calculate('6 2/') == 3
+    assert calculate('2 6/') == 0

@@ -47,3 +47,4 @@ def test_too_many_operators():
     assert calculate('1 2 3+*/') == 0
     assert calculate('3 6 2/*+') == 9
     assert calculate('3 6 2/+*') == 0
+    assert calculate('-') == 0

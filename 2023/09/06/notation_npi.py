@@ -27,7 +27,7 @@ def calculate(input):
                     return 0
                 queue[-1] = int(eval(input[0] + str(queue[-1])))
             else:
-                queue[0] = 0
+                queue.append(0)
         else:
             if queue:
                 queue[-1] = int(str(queue[-1]) + str(input[0]))

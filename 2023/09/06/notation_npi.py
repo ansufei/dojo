@@ -1,10 +1,3 @@
-# '1 2 3+- should return -4
-# 3 4x 5 6x+ should return 42
-# '1 2 3+*/ should return 0
-# '3 6 2/*+ should return 9
-# '-' should return 0
-# '~50' should return 0
-
 '''LOGIC
 The space pushes to a different place in memory. 
 For operators, using a space between values duplicates the last value to the top of the pile?

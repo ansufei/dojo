@@ -1,5 +1,4 @@
 from notation_npi import calculate
-# '-50' should return 50
 
 '''LOGIC
 The space pushes to a different place in memory. 

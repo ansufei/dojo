@@ -22,14 +22,16 @@ def calculate(input):
     while counter < length_input:
         if input[0] == ' ':
             queue.append(input[0])
-        elif input[0] == '~':
-            if queue:
-                queue[-1] = '-' + queue[-1]
+        elif input[0] in ['+','*','/','-']:
+            if len(queue) > 1:
+                queue[-1] = queue[-2] + input[0] + queue[-1]
+            elif len(queue) == 1:
+                    if input[0] == '-':
+                        queue[-1] = '-' + queue[-1]
+                    else:
+                        queue[-1] += input[0]
             else:
                 queue[0] = 0
-        elif input[0] in ['+','*','/']:
-            if len(queue) > 1:
-                queue[-1] = queue[-2] + input[0] + queue[-1]            
         else:
             if queue:
                 queue[-1] += input[0]

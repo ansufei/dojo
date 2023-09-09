@@ -43,5 +43,6 @@ def test_operation_three_operands():
 def test_stacked_operators():
     assert calculate('1 2 3+-') == -4
     assert calculate('1 2 3-+') == 0
+    assert calculate('1 2 3+/') == 0
 
 #def test_missing

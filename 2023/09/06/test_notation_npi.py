@@ -40,8 +40,8 @@ def test_operation_three_operands():
     assert calculate('1 2+ 3-') == 0
     assert calculate('10 20+ 50-') == -20
 
-# def test_stacked_operators():
-#     assert calculate('1 2 3+-') == -4
-#     assert calculate('1 2 3-+') == 0
+def test_stacked_operators():
+    assert calculate('1 2 3+-') == -4
+    assert calculate('1 2 3-+') == 0
 
 #def test_missing

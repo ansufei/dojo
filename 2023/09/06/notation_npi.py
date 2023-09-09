@@ -20,17 +20,17 @@ def calculate(input):
             queue.append(input[0])
         elif input[0] in ['+','*','/','-']:
             if len(queue) > 1:
-                queue[-1] = queue[-2] + input[0] + queue[-1]
+                queue[-2] = int(eval(str(queue[-2]) + input[0] + str(queue[-1])))
+                queue.pop()
             elif len(queue) == 1:
-                queue[-1] = input[0] + queue[-1]
+                queue[-1] = int(eval(input[0] + str(queue[-1])))
             else:
                 queue[0] = 0
         else:
             if queue:
-                queue[-1] += input[0]
+                queue[-1] = int(str(queue[-1]) + str(input[0]))
             else:
-                queue.append(input[0])
+                queue.append(eval(input[0]))
         input = input[1:]
-        print(queue)
         counter += 1
-    return int(eval(queue[-1]))
+    return queue[-1]

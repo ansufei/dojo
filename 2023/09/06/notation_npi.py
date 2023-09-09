@@ -23,6 +23,8 @@ def calculate(input):
                 queue[-2] = int(eval(str(queue[-2]) + input[0] + str(queue[-1])))
                 queue.pop()
             elif len(queue) == 1:
+                if input[0] in ['/','*']:
+                    return 0
                 queue[-1] = int(eval(input[0] + str(queue[-1])))
             else:
                 queue[0] = 0

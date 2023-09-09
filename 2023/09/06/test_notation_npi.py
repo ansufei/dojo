@@ -1,7 +1,5 @@
 from notation_npi import calculate
 # 3 4x 5 6x+ should return 42
-# '1 2 3+*/ should return 0
-# '3 6 2/*+ should return 9
 # '-' should return 0
 # '-50' should return 50
 
@@ -45,4 +43,7 @@ def test_stacked_operators():
     assert calculate('1 2 3-+') == 0
     assert calculate('1 2 3+/') == 0
 
-#def test_missing
+def test_too_many_operators():
+    assert calculate('1 2 3+*/') == 0
+    assert calculate('3 6 2/*+') == 9
+    assert calculate('3 6 2/+*') == 0

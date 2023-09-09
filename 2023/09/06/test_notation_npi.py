@@ -1,6 +1,4 @@
 from notation_npi import calculate
-# 3 4x 5 6x+ should return 42
-# '-' should return 0
 # '-50' should return 50
 
 '''LOGIC
@@ -51,3 +49,6 @@ def test_too_many_operators():
 
 def test_operators_at_various_positions():
     assert calculate('3 4* 5 6*+') == 42
+
+def start_with_operator():
+    assert calculate('-50') == 50

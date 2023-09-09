@@ -1,15 +1,9 @@
 from notation_npi import calculate
-# '1 2+ 5-' should return -2
-# '1 2 3-' should return -1
-# '1 2 3+-' should return -4
-# '1 2 3-+' should return 0
-# '1 2- 3+' should return 2
-# '1 2+ 3-' should return 0
 # 3 4x 5 6x+ should return 42
 # '1 2 3+*/ should return 0
 # '3 6 2/*+ should return 9
 # '-' should return 0
-# '~50' should return 0
+# '-50' should return 50
 
 '''LOGIC
 The space pushes to a different place in memory. 
@@ -26,8 +20,9 @@ def test_single_operand_string_returns_operand():
 def test_two_operands_with_space_returns_last_one():
     assert calculate('3 5') == 5
 
-def test_reverse_operateur():
+def test_unique_operator():
     assert calculate('50-') == -50
+    assert calculate('3+') == 3
 
 def test_addition_two_operands():
     assert calculate('3 4+') == 7
@@ -40,7 +35,13 @@ def test_division_two_operands():
     assert calculate('2 6/') == 0
 
 def test_operation_three_operands():
-    assert calculate('1 2+ 5-') == -2
+    assert calculate('1 2 3-') == -1
+    assert calculate('1 2- 3+') == 2
+    assert calculate('1 2+ 3-') == 0
     assert calculate('10 20+ 50-') == -20
+
+# def test_stacked_operators():
+#     assert calculate('1 2 3+-') == -4
+#     assert calculate('1 2 3-+') == 0
 
 #def test_missing

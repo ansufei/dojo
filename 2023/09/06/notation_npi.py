@@ -1,7 +1,3 @@
-# '4 5*' should return 20
-# '6 2/' should return 3 (i.e. integer division)
-# '1 2+ 5-' should return -2
-# '1 2 3-' should return -1
 # '1 2 3+- should return -4
 # 3 4x 5 6x+ should return 42
 # '1 2 3+*/ should return 0
@@ -26,10 +22,7 @@ def calculate(input):
             if len(queue) > 1:
                 queue[-1] = queue[-2] + input[0] + queue[-1]
             elif len(queue) == 1:
-                    if input[0] == '-':
-                        queue[-1] = '-' + queue[-1]
-                    else:
-                        queue[-1] += input[0]
+                queue[-1] = input[0] + queue[-1]
             else:
                 queue[0] = 0
         else:
@@ -38,5 +31,6 @@ def calculate(input):
             else:
                 queue.append(input[0])
         input = input[1:]
+        print(queue)
         counter += 1
     return int(eval(queue[-1]))

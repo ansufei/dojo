@@ -1,18 +1,10 @@
-Run a project:
-- `bash start-new-dojo` to create a repo at today's date and a template README
-- create virtual env (using python 3.10, as it is the version requested by poetry): `python3.10 -m venv ~/.virtualenvs/env_name`
-- [using nix] one time only: `brew install mask`. [What is mask](https://github.com/jacobdeichert/mask)
-- `mask install`
-- then any mask command, e.g. `mask test`
-- start any session by running `bash start-new-dojo`(if adding more instructions to this README, increase the nb of lines to delete in the script - line 65)
-
 Prochaine session : le  à 
 
 Personnes présentes :
 - 
 
 Retro :
-- Ancien sujet
+- Super Tic Tac Toe (focus logic) - TypeScript - TCRDD Randori
   - 
 
 Explication des règles :

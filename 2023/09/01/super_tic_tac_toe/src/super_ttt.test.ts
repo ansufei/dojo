@@ -32,4 +32,7 @@ describe("a game", () => {
     const initial_game = new Game([move, next, move])
     expect(initial_game.is_legal()).toBe(false)
   })
+  it("the next move can be anywhere free if the grid pointed by last move is full", () => {
+    
+  })
 })

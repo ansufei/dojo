@@ -23,8 +23,10 @@ export enum Coord {
   
 export class Game {
 moves
+grids
 constructor(moves) {
     this.moves = moves
+    this.grids = this.map_moves(moves)
 }
 encode_moves(moves) {
     let converted_moves = new Array(moves.length)
@@ -39,6 +41,22 @@ remove_duplicates(moves) {
     return [...new Set(converted_moves)]
   }
 
+map_moves(moves) {
+    // mapping completion of small grids (keys are the big grids)
+    var grids = new Map();
+    moves.forEach(value => {
+        if (grids.has(value[0])){
+            grids.get(value[0]).push(value[1]);
+        } else {
+            grids.set(value[0], [value[1]]);
+        }
+    })
+    return grids
+}
+
+// grid_is_full(moves) {
+// }
+
 is_won() {
     return false
 }
@@ -46,6 +64,8 @@ is_won() {
 is_legal() {
     // no move is played more than once
     if (this.remove_duplicates(this.moves).length !== this.moves.length) return false
+
+    // the sub-grid refered to in the last move is full, free to choose another grid (exception to the default case below)
 
     // the grid of the current move is related to the cell in the last move
     if (this.moves.length !== 0) {

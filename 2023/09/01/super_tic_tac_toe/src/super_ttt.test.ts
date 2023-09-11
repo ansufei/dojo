@@ -28,6 +28,9 @@ describe("a game", () => {
     const three_moves_initial_game = new Game()
     three_moves_initial_game.add_move(move, next)
     expect(three_moves_initial_game.move_is_legal(next2)).toBe(true)
+    const wrong_game = new Game()
+    wrong_game.add_move(move)
+    expect(wrong_game.move_is_legal(next2)).toBe(false)
   })
   it("a move can only be played once", () => {
     const move = [Coord.MID, Coord.TOP_LEFT]

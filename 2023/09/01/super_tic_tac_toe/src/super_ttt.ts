@@ -53,8 +53,27 @@ add_move(...moves) {
     return this.grids
 }
 
-// grid_is_full(moves) {
+// small_grid_is_full(moves) {
 // }
+
+// small_grid_is_won() {
+
+//}
+
+// game_is_won() {
+
+//}
+
+whose_turn() {
+    let calc = this.moves.length
+    let player = 'crosses'
+    if (calc % 2 == 0) {
+        player = 'noughts'
+        console.log('noughts should play next')
+    } 
+    console.log(player, 'should play next')
+    return player
+}
 
 game_is_won() {
     return false
@@ -70,10 +89,11 @@ move_is_legal(move = [Coord.EMPTY,Coord.EMPTY]) {
             return false
         }
     }
+    // the sub-grid referred to in the last move was won, free to choose another grid (exception to the default case below)
 
-    // the sub-grid refered to in the last move is full, free to choose another grid (exception to the default case below)
+    // the sub-grid referred to in the last move is full, free to choose another grid (exception to the default case below)
 
-    // the grid of the current move is related to the cell in the last move
+    // the grid of the current move is related to the cell in the last move (default case)
     if (this.moves.length !== 0) {
         return move[0] == this.moves.at(-1)[1]
     }

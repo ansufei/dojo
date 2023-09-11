@@ -7,5 +7,6 @@
 - déterminer si une liste de coup est légale
   - [x] 2 coups au meme endroit
   - [x] coup qui ne respecte pas le coup précédent
-  - [ ] coup libre lorsque une sous grille est finie
-- alternance des joueurs
+  - [ ] coup libre lorsqu' une sous grille est finie
+  - [ ] coup libre lorsqu'une sous-grille est gagnée
+- alternance des joueurs (à qui le tour)

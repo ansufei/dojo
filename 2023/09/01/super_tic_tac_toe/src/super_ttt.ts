@@ -7,26 +7,17 @@ export enum Coord {
     MID_RIGHT,
     BOTTOM_LEFT,
     BOTTOM_MID,
-    BOTTOM_RIGHT
+    BOTTOM_RIGHT,
+    EMPTY
   }
 
-// export const pos_moves = new Map();
-
-// export let counter = 0
-// for (let i = 0; i < 9; i ++) {
-//     for(let j = 0; j < 9; j ++){
-//         const move = [i,j]
-//         pos_moves.set(move, counter)
-//         counter ++
-//     }
-// }
   
 export class Game {
 moves
 grids
-constructor(moves) {
-    this.moves = moves
-    this.grids = this.map_moves(moves)
+constructor() {
+    this.moves = new Array();
+    this.grids = new Map();
 }
 encode_moves(moves) {
     let converted_moves = new Array(moves.length)
@@ -41,35 +32,50 @@ remove_duplicates(moves) {
     return [...new Set(converted_moves)]
   }
 
-map_moves(moves) {
+add_move(...moves) {
     // mapping completion of small grids (keys are the big grids)
-    var grids = new Map();
-    moves.forEach(value => {
-        if (grids.has(value[0])){
-            grids.get(value[0]).push(value[1]);
-        } else {
-            grids.set(value[0], [value[1]]);
-        }
-    })
-    return grids
+    if (moves.length == 0) return this.grids
+    else if (moves[0] == Coord.EMPTY) return this.grids
+    else {
+        moves.forEach(value => {
+            if (this.move_is_legal(value)) {
+                // add the move to the log of the order in which the moves are played
+                this.moves.push(value)
+                // also add the move to the map of the current game
+                if (this.grids.has(value[0])){
+                    this.grids.get(value[0]).push(value[1]);
+                } else {
+                    this.grids.set(value[0], [value[1]]);
+                }
+            }    
+        })
+    }
+    return this.grids
 }
 
 // grid_is_full(moves) {
 // }
 
-is_won() {
+game_is_won() {
     return false
 }
 
-is_legal() {
+move_is_legal(move = [Coord.EMPTY,Coord.EMPTY]) {
+    // an empty move is legal
+    if (move[0] == Coord.EMPTY) return true
+
     // no move is played more than once
-    if (this.remove_duplicates(this.moves).length !== this.moves.length) return false
+    if (this.grids.has(move[0])) {
+        if (this.grids.get(move[0]).includes(move[1])) {
+            return false
+        }
+    }
 
     // the sub-grid refered to in the last move is full, free to choose another grid (exception to the default case below)
 
     // the grid of the current move is related to the cell in the last move
     if (this.moves.length !== 0) {
-    return this.moves[1][0] == this.moves[0][1]
+        return move[0] == this.moves.at(-1)[1]
     }
 
     return true

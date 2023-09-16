@@ -15,15 +15,15 @@ export enum Coord {
 export class Game {
 moves
 map_moves
-map_moves_noughts
-map_moves_crosses
+map_moves_player
 results
 player
 constructor() {
     this.moves = new Array();
     this.map_moves = new Map();
-    this.map_moves_noughts = new Map();
-    this.map_moves_crosses = new Map();
+    this.map_moves_player = new Map();
+    this.map_moves_player.set('crosses', new Map())
+    this.map_moves_player.set('noughts', new Map())
     this.results = new Map();
     this.player = 'crosses';
 }
@@ -43,20 +43,16 @@ add_move(...moves) {
     else if (moves[0] == Coord.EMPTY) return this.map_moves
     else {
         moves.forEach((value, valueIndex) => {
+            this.player = (valueIndex % 2 == 0) ? 'crosses' : 'noughts'
             if (this.move_is_legal(value)) {
                 // add the move to the log of the order in which the moves are played
                 this.moves.push(value)
                 // also add the move to the map of the current game and to the maps of the respective players
                 this.populate_grid(this.map_moves, value)
-                let map_moves_player = (valueIndex % 2 == 0) ? this.map_moves_crosses : this.map_moves_noughts;
-                this.populate_grid(map_moves_player, value)
+                this.populate_grid(this.map_moves_player.get(this.player), value)
                 
                 // check if won
-                this.player = (valueIndex % 2 == 0) ? 'crosses' : 'noughts'
                 this.grid_is_won(value[0],this.player) 
-
-                // check if full
-                //this.grid_is_full(value[0])
                     
             } else {
                 console.log(value, 'is not a legal move here')
@@ -81,10 +77,9 @@ grid_is_full(grid) {
 }
 
 grid_is_won(grid,player) {
-    let map_moves_player = (player == 'crosses') ? this.map_moves_crosses : this.map_moves_noughts;
     let moves_player;
-    if (map_moves_player.has(grid)) {
-        moves_player = map_moves_player.get(grid)
+    if (this.map_moves_player.get(player).has(grid)) {
+        moves_player = this.map_moves_player.get(player).get(grid)
     } else {
         return false
     }

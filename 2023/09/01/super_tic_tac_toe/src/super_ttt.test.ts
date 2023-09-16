@@ -46,9 +46,10 @@ describe("a game", () => {
     expect(initial_game.move_is_legal([3,0])).toBe(true)
   })
   it("the next move can be anywhere free if the grid pointed by last move is full", () => {
-    // const initial_game = new Game()
-    // initial_game.add_move([0,0],[0,1],[1,0],[0,2],[2,0],[0,3],[3,0],[0,4],[4,0],[0,5],[5,0],[0,6],[6,0],[0,7],[7,9],[0,8])
-    // expect(initial_game.move_is_legal([2,2])).toBe(true)
+    const initial_game = new Game()
+    initial_game.add_move([0,1],[1,0],[0,4],[4,0],[0,7],[7,0],[0,2],[2,0],[0,3],[3,0],[0,5],[5,0],[0,6],[6,0],[0,8],[8,0],[0,0])
+    expect(initial_game.move_is_legal([2,2])).toBe(true)
+    expect(initial_game.grid_is_full(0)).toBe(true)
   })
   it('correct player should play next',() => {
     //by convention crosses plays first

@@ -25,7 +25,7 @@ constructor() {
     this.map_moves_noughts = new Map();
     this.map_moves_crosses = new Map();
     this.results = new Map();
-    this.player = this.moves.length % 2 == 0 ? 'noughts' : 'crosses';
+    this.player = 'crosses';
 }
 
 populate_grid(grid, value){
@@ -52,8 +52,11 @@ add_move(...moves) {
                 this.populate_grid(map_moves_player, value)
                 
                 // check if won
-                let player = (valueIndex % 2 == 0) ? 'crosses' : 'noughts'
-                this.grid_is_won(value[0],player) 
+                this.player = (valueIndex % 2 == 0) ? 'crosses' : 'noughts'
+                this.grid_is_won(value[0],this.player) 
+
+                // check if full
+                //this.grid_is_full(value[0])
                     
             } else {
                 console.log(value, 'is not a legal move here')
@@ -64,6 +67,16 @@ add_move(...moves) {
 }
 
 grid_is_full(grid) {
+    if (this.map_moves.has(grid)) {
+        if (this.map_moves.get(grid).length == 9) {
+            if (this.results.has(grid)) {
+                this.grid_is_won(grid,this.player)
+            } else {
+                this.results.set(grid,'draw')
+            }
+            return true 
+        }
+    }
     return false
 }
 

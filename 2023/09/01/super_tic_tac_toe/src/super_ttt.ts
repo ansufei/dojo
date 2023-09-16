@@ -126,7 +126,7 @@ add_move(...moves) {
                 this.grid_is_won(value[0],this.player) 
 
                 // check if game won
-                this.game_is_won()
+                this.game_is_won(this.player)
                     
             } else {
                 console.log(value, 'is not a legal move here')

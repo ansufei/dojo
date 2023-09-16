@@ -80,7 +80,8 @@ describe("a game", () => {
     initial_game.add_move([6,2],[2,6],[6,6],[6,0],[8,4]) // crosses wins the game
     expect(initial_game.grid_is_won(4,'crosses')).toBe(true)
     expect(initial_game.grid_is_won(1,'noughts')).toBe(true)
-    expect(initial_game.game_is_won()).toBe(false)
+    expect(initial_game.game_is_won('noughts')).toBe(false)
+    expect(initial_game.game_is_won('crosses')).toBe(true)
     console.log(initial_game.results)
   })
 })

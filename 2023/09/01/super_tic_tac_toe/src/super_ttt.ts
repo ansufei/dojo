@@ -1,6 +1,6 @@
 /* TO DO:
-- stop players from using a won grid
-- a player can choose which sub-grid to play only the adversary points to a grid that she (the player) already won, not any won grid
+- stop players from using a won sub-grid
+- a player can choose which sub-grid to play only the adversary points to a grid that she (the player) already won, not any won grid?
 - the full game must look like a TTT as well, i.e. the winning sub-grids must be aligned
 - refactor this.player
 */
@@ -28,6 +28,12 @@ populate_grid(grid, value){
     return grid
 }
 
+whose_turn() {
+    //by convention crosses plays first
+    let player = (this.moves.length % 2 == 0) ? 'crosses' : 'noughts'
+    return player
+}
+
 grid_is_full(grid) {
     let length_grid = 0;
     if (this.map_moves.get('crosses').has(grid)) {
@@ -47,6 +53,17 @@ grid_is_full(grid) {
     return false
 }
 
+calc_won(moves_player) {
+    const winning_lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
+    for (let i=0; i < winning_lines.length; i++) {
+        let check_result = winning_lines[i].filter(n => !moves_player.includes(n))
+        if (check_result.length == 0) {
+            return true
+        }
+    }
+    return false
+}
+
 grid_is_won(grid,player) {
     let moves_player;
     if (this.map_moves.get(player).has(grid)) {
@@ -54,27 +71,19 @@ grid_is_won(grid,player) {
     } else {
         return false
     }
-    const winning_lines = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
-    for (let i=0; i < winning_lines.length; i++) {
-        let check_result = winning_lines[i].filter(n => !moves_player.includes(n))
-        if (check_result.length == 0) {
-            this.results.set(grid, player)
-            return true
-        }
+    if (this.calc_won(moves_player)) {
+        this.results.set(grid, player)
+        return true
     }
     return false
 }
 
-whose_turn() {
-    //by convention crosses plays first
-    let player = (this.moves.length % 2 == 0) ? 'crosses' : 'noughts'
-    return player
-}
-
-game_is_won() {
-    // any player's nb of won is higher than (total - draws) / 2
-    // else all draws
-    return false
+game_is_won(player) {
+    console.log(this.results)
+    //let translate_results = new Array();
+    let player_results = new Map([...this.results].filter(([k,v]) => v == player))
+    let moves_player = Array.from(player_results.keys() );
+    return this.calc_won(moves_player)
 }
 
 move_is_legal(move = Array()) {

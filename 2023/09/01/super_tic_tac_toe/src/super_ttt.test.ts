@@ -51,8 +51,15 @@ describe("a game", () => {
     // expect(initial_game.move_is_legal([2,2])).toBe(true)
   })
   it('correct player should play next',() => {
+    //by convention crosses plays first
     const initial_game = new Game()
     initial_game.add_move([0,0],[0,1])
-    expect(initial_game.whose_turn()).toBe('noughts')
+    expect(initial_game.whose_turn()).toBe('crosses')
+  })
+  it('a small grid is won with 3 adjacent moves by the same player',() => {
+    const initial_game = new Game()
+    initial_game.add_move([0,1],[1,0],[0,4],[4,0],[0,7])
+    expect(initial_game.grid_is_won(0,'crosses')).toBe(true)
+    expect(initial_game.grid_is_won(0,'noughts')).toBe(false)
   })
 })

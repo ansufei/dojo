@@ -50,6 +50,7 @@ add_move(...moves) {
 }
 
 grid_is_full(grid) {
+    // replace with this.map_moves_player if possible
     if (this.map_moves.has(grid)) {
         if (this.map_moves.get(grid).length == 9) {
             if (this.results.has(grid)) {
@@ -89,6 +90,8 @@ whose_turn() {
 }
 
 game_is_won() {
+    // any player's nb of won is higher than (total - draws) / 2
+    // else all draws
     return false
 }
 
@@ -96,11 +99,9 @@ move_is_legal(move = Array()) {
     // an empty move is legal
     if (move.length == 0) return true
 
-    // no move is played more than once
-    if (this.map_moves.has(move[0])) {
-        if (this.map_moves.get(move[0]).includes(move[1])) {
+    // no move is played more than once 
+    if (this.moves.includes(move)) {
             return false
-        }
     }    
 
     // the grid of the current move is related to the cell in the last move (default case)

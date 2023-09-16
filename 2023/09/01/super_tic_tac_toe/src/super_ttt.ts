@@ -18,12 +18,14 @@ map_moves
 map_moves_noughts
 map_moves_crosses
 results
+player
 constructor() {
     this.moves = new Array();
     this.map_moves = new Map();
     this.map_moves_noughts = new Map();
     this.map_moves_crosses = new Map();
     this.results = new Map();
+    this.player = this.moves.length % 2 == 0 ? 'noughts' : 'crosses';
 }
 
 populate_grid(grid, value){
@@ -46,12 +48,16 @@ add_move(...moves) {
                 this.moves.push(value)
                 // also add the move to the map of the current game and to the maps of the respective players
                 this.populate_grid(this.map_moves, value)
+                let player = 'noughts'
                 if (valueIndex % 2 == 0) {
                     this.populate_grid(this.map_moves_crosses, value)
+                    player = 'crosses'
                 }
                 else {
                     this.populate_grid(this.map_moves_noughts, value)
                 }
+                // check if won
+                this.grid_is_won(value[0],player) 
                     
             } else {
                 console.log(value, 'is not a legal move here')
@@ -61,8 +67,9 @@ add_move(...moves) {
     return this.map_moves
 }
 
-// grid_is_full(grid) {
-// }
+grid_is_full(grid) {
+    return false
+}
 
 grid_is_won(grid,player) {
     let map_moves_player = this.map_moves_noughts
@@ -111,18 +118,19 @@ move_is_legal(move = [Coord.EMPTY,Coord.EMPTY]) {
             return false
         }
     }    
-    // the sub-grid referred to in the last move is full, free to choose another grid (exception to the default case below)
 
     // the grid of the current move is related to the cell in the last move (default case)
     if (this.moves.length !== 0) {
-        // the sub-grid referred to in the last move was won, free to choose another grid 
-        if (this.results.has(this.moves.at(-1)[1])){
+        // the sub-grid referred to in the last move is full, do not choose
+        if (this.grid_is_full(move[0])) {
+            return false
+        // the sub-grid referred to in the last move was won, free to choose any grid (including a won grid if not full, even if counterproductive)
+        } else if (this.results.has(this.moves.at(-1)[1])) {
             return true
         } else {
             return move[0] == this.moves.at(-1)[1]
         }
     }
-
     return true
-}
+    }
 }

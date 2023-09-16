@@ -2,15 +2,13 @@
 export class Game {
 moves
 map_moves
-map_moves_player
 results
 player
 constructor() {
     this.moves = new Array();
     this.map_moves = new Map();
-    this.map_moves_player = new Map();
-    this.map_moves_player.set('crosses', new Map())
-    this.map_moves_player.set('noughts', new Map())
+    this.map_moves.set('crosses', new Map())
+    this.map_moves.set('noughts', new Map())
     this.results = new Map();
     this.player = 'crosses';
 }
@@ -34,9 +32,8 @@ add_move(...moves) {
             if (this.move_is_legal(value)) {
                 // add the move to the log of the order in which the moves are played
                 this.moves.push(value)
-                // also add the move to the map of the current game and to the maps of the respective players
-                this.populate_grid(this.map_moves, value)
-                this.populate_grid(this.map_moves_player.get(this.player), value)
+                // also add the move to the map of the current game
+                this.populate_grid(this.map_moves.get(this.player), value)
                 
                 // check if won
                 this.grid_is_won(value[0],this.player) 
@@ -50,24 +47,28 @@ add_move(...moves) {
 }
 
 grid_is_full(grid) {
-    // replace with this.map_moves_player if possible
-    if (this.map_moves.has(grid)) {
-        if (this.map_moves.get(grid).length == 9) {
-            if (this.results.has(grid)) {
-                this.grid_is_won(grid,this.player)
-            } else {
-                this.results.set(grid,'draw')
-            }
-            return true 
+    let length_grid = 0;
+    if (this.map_moves.get('crosses').has(grid)) {
+        length_grid += this.map_moves.get('crosses').get(grid).length
+    }
+    if (this.map_moves.get('noughts').has(grid)) {
+        length_grid += this.map_moves.get('noughts').get(grid).length
+    }
+    if (length_grid == 9) {
+        if (this.results.has(grid)) {
+            this.grid_is_won(grid,this.player)
+        } else {
+            this.results.set(grid,'draw')
         }
+        return true 
     }
     return false
 }
 
 grid_is_won(grid,player) {
     let moves_player;
-    if (this.map_moves_player.get(player).has(grid)) {
-        moves_player = this.map_moves_player.get(player).get(grid)
+    if (this.map_moves.get(player).has(grid)) {
+        moves_player = this.map_moves.get(player).get(grid)
     } else {
         return false
     }

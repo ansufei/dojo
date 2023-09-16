@@ -1,7 +1,6 @@
 /* TO DO:
 - stop players from using a won sub-grid
 - a player can choose which sub-grid to play only the adversary points to a grid that she (the player) already won, not any won grid?
-- the full game must look like a TTT as well, i.e. the winning sub-grids must be aligned
 - refactor this.player
 */
 

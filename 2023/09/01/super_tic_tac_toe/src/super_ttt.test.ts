@@ -61,5 +61,7 @@ describe("a game", () => {
     initial_game.add_move([0,1],[1,0],[0,4],[4,0],[0,7])
     expect(initial_game.grid_is_won(0,'crosses')).toBe(true)
     expect(initial_game.grid_is_won(0,'noughts')).toBe(false)
+    expect(initial_game.grid_is_won(1,'crosses')).toBe(false)
+    expect(initial_game.grid_is_won(1,'noughts')).toBe(false)
   })
 })

@@ -17,11 +17,13 @@ moves
 map_moves
 map_moves_noughts
 map_moves_crosses
+results
 constructor() {
     this.moves = new Array();
     this.map_moves = new Map();
     this.map_moves_noughts = new Map();
     this.map_moves_crosses = new Map();
+    this.results = new Map();
 }
 
 populate_grid(grid, value){
@@ -59,7 +61,7 @@ add_move(...moves) {
     return this.map_moves
 }
 
-// grid_is_full(moves) {
+// grid_is_full(grid) {
 // }
 
 grid_is_won(grid,player) {
@@ -77,6 +79,7 @@ grid_is_won(grid,player) {
     for (let i=0; i < winning_lines.length; i++) {
         let check_result = winning_lines[i].filter(n => !moves_player.includes(n))
         if (check_result.length == 0) {
+            this.results.set(grid, player)
             return true
         }
     }
@@ -107,14 +110,17 @@ move_is_legal(move = [Coord.EMPTY,Coord.EMPTY]) {
         if (this.map_moves.get(move[0]).includes(move[1])) {
             return false
         }
-    }
-    // the sub-grid referred to in the last move was won, free to choose another grid (exception to the default case below)
-
+    }    
     // the sub-grid referred to in the last move is full, free to choose another grid (exception to the default case below)
 
     // the grid of the current move is related to the cell in the last move (default case)
     if (this.moves.length !== 0) {
-        return move[0] == this.moves.at(-1)[1]
+        // the sub-grid referred to in the last move was won, free to choose another grid 
+        if (this.results.has(this.moves.at(-1)[1])){
+            return true
+        } else {
+            return move[0] == this.moves.at(-1)[1]
+        }
     }
 
     return true

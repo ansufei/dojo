@@ -75,8 +75,9 @@ describe("a game", () => {
   })
   it('a game with more than 50% wins is won',() => {
     const initial_game = new Game()
-    initial_game.add_move([4,1],[1,8],[8,5],[5,3],[3,7],[7,3],[3,1],[1,4],[4,7],[7,6],[6,3],[3,4],[4,4]) // crosses wins game in grid 4
-    initial_game.add_move([1,0],[0,3],[3,2],[2,5],[5,5],[5,8],[8,0],[0,5],[5,4],[0,4])
+    initial_game.add_move([4,1],[1,8],[8,5],[5,3],[3,7],[7,3],[3,1],[1,4],[4,7],[7,6],[6,3],[3,4],[4,4]) // crosses wins in grid 4
+    initial_game.add_move([1,0],[0,3],[3,2],[2,5],[5,5],[5,8],[8,0],[0,5],[5,4],[0,4],[7,0],[8,3],[3,6]) // noughts lost or draw
+    initial_game.add_move([6,2],[2,6],[6,6],[6,0],[8,4]) // crosses wins the game
     expect(initial_game.grid_is_won(4,'crosses')).toBe(true)
     expect(initial_game.grid_is_won(1,'noughts')).toBe(true)
     expect(initial_game.game_is_won()).toBe(false)

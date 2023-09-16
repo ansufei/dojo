@@ -1,3 +1,9 @@
+/* TO DO:
+- stop players from using a won grid
+- a player can choose which sub-grid to play only the adversary points to a grid that she (the player) already won, not any won grid
+- the full game must look like a TTT as well, i.e. the winning sub-grids must be aligned
+- refactor this.player
+*/
 
 export class Game {
 moves
@@ -20,30 +26,6 @@ populate_grid(grid, value){
         grid.set(value[0], [value[1]]);
     }
     return grid
-}
-
-add_move(...moves) {
-    // mapping completion of small grids (keys are the big grids)
-    if (moves.length == 0) return this.map_moves
-    else if (moves[0].length == 0) return this.map_moves
-    else {
-        moves.forEach((value, valueIndex) => {
-            this.player = (valueIndex % 2 == 0) ? 'crosses' : 'noughts'
-            if (this.move_is_legal(value)) {
-                // add the move to the log of the order in which the moves are played
-                this.moves.push(value)
-                // also add the move to the map of the current game
-                this.populate_grid(this.map_moves.get(this.player), value)
-                
-                // check if won
-                this.grid_is_won(value[0],this.player) 
-                    
-            } else {
-                console.log(value, 'is not a legal move here')
-            }    
-        })
-    }
-    return this.map_moves
 }
 
 grid_is_full(grid) {
@@ -86,7 +68,6 @@ grid_is_won(grid,player) {
 whose_turn() {
     //by convention crosses plays first
     let player = (this.moves.length % 2 == 0) ? 'crosses' : 'noughts'
-    console.log(player, 'should play next')
     return player
 }
 
@@ -101,9 +82,9 @@ move_is_legal(move = Array()) {
     if (move.length == 0) return true
 
     // no move is played more than once 
-    if (this.moves.includes(move)) {
-            return false
-    }    
+    if (this.moves.indexOf(move) > -1) {
+        return false
+    }
 
     // the grid of the current move is related to the cell in the last move (default case)
     if (this.moves.length !== 0) {
@@ -118,5 +99,32 @@ move_is_legal(move = Array()) {
         }
     }
     return true
+    }
+
+add_move(...moves) {
+    // mapping completion of small grids (keys are the big grids)
+    if (moves.length == 0) return this.map_moves // no moves is legal
+    else {
+        moves.forEach((value, valueIndex) => {
+            if (this.move_is_legal(value)) {
+                this.player = this.whose_turn()
+                
+                // add the move to the log of the order in which the moves are played
+                this.moves.push(value)
+                // also add the move to the map of the current game
+                this.populate_grid(this.map_moves.get(this.player), value)
+                
+                // check if won
+                this.grid_is_won(value[0],this.player) 
+
+                // check if game won
+                this.game_is_won()
+                    
+            } else {
+                console.log(value, 'is not a legal move here')
+            }    
+        })
+    }
+    return this.map_moves
     }
 }

@@ -65,12 +65,10 @@ describe("a game", () => {
     expect(initial_game.grid_is_won(1,'crosses')).toBe(false)
     expect(initial_game.grid_is_won(1,'noughts')).toBe(false)
   })
-  // it('a full grid is a draw',() => {
-  //   const initial_game = new Game()
-  //   initial_game.add_move([0,1],[1,0],[0,4],[4,0],[0,7])
-  //   expect(initial_game.grid_is_won(0,'crosses')).toBe(true)
-  //   expect(initial_game.grid_is_won(0,'noughts')).toBe(false)
-  //   expect(initial_game.grid_is_won(1,'crosses')).toBe(false)
-  //   expect(initial_game.grid_is_won(1,'noughts')).toBe(false)
-  // })
+  it('a full grid is a draw',() => {
+    const initial_game = new Game()
+    initial_game.add_move([0,1],[1,0],[0,4],[4,0],[0,7],[7,0],[0,2],[2,0],[0,3],[3,0],[0,5],[5,0],[0,6],[6,0],[0,8],[8,0],[0,0])
+    expect(initial_game.grid_is_full(0)).toBe(true)
+    expect(initial_game.grid_is_full(1)).toBe(false)
+  })
 })

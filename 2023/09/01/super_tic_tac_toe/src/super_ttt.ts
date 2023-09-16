@@ -48,15 +48,11 @@ add_move(...moves) {
                 this.moves.push(value)
                 // also add the move to the map of the current game and to the maps of the respective players
                 this.populate_grid(this.map_moves, value)
-                let player = 'noughts'
-                if (valueIndex % 2 == 0) {
-                    this.populate_grid(this.map_moves_crosses, value)
-                    player = 'crosses'
-                }
-                else {
-                    this.populate_grid(this.map_moves_noughts, value)
-                }
+                let map_moves_player = (valueIndex % 2 == 0) ? this.map_moves_crosses : this.map_moves_noughts;
+                this.populate_grid(map_moves_player, value)
+                
                 // check if won
+                let player = (valueIndex % 2 == 0) ? 'crosses' : 'noughts'
                 this.grid_is_won(value[0],player) 
                     
             } else {
@@ -72,10 +68,7 @@ grid_is_full(grid) {
 }
 
 grid_is_won(grid,player) {
-    let map_moves_player = this.map_moves_noughts
-    if (player == 'crosses') {
-        map_moves_player = this.map_moves_crosses
-    }
+    let map_moves_player = (player == 'crosses') ? this.map_moves_crosses : this.map_moves_noughts;
     let moves_player;
     if (map_moves_player.has(grid)) {
         moves_player = map_moves_player.get(grid)
@@ -95,11 +88,7 @@ grid_is_won(grid,player) {
 
 whose_turn() {
     //by convention crosses plays first
-    let calc = this.moves.length
-    let player = 'noughts'
-    if (calc % 2 == 0) {
-        player = 'crosses'
-    } 
+    let player = (this.moves.length % 2 == 0) ? 'crosses' : 'noughts'
     console.log(player, 'should play next')
     return player
 }

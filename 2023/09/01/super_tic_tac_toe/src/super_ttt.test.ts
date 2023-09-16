@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { Game, Coord } from "./super_ttt"
+import { Game } from "./super_ttt"
 
 
 describe("a game", () => {
@@ -12,19 +12,19 @@ describe("a game", () => {
     expect(initial_game.move_is_legal()).toBe(true)
   })
   it("two moves on the same place is illegal", () => {
-    const move = [Coord.MID, Coord.TOP_LEFT]
+    const move = [4, 0]
     const same_move = move
     const initial_game = new Game()
     initial_game.add_move(move, same_move)
     expect(initial_game.move_is_legal(same_move)).toBe(false)
   })
   it("the next move should be in the correct grid", () => {
-    const move = [Coord.MID, Coord.TOP_LEFT]
-    const next = [Coord.TOP_LEFT, Coord.MID] // the choice of Coord.MID is arbitrary
+    const move = [4, 0]
+    const next = [0, 4] // the choice of 4 is arbitrary
     const initial_game = new Game()
     initial_game.add_move(move)
     expect(initial_game.move_is_legal(next)).toBe(true)
-    const next2 = [Coord.MID, Coord.MID_LEFT] // the choice of MID_LEFT is arbitrary (it should be different from the first move though)
+    const next2 = [4, 3] // the choice of MID_LEFT is arbitrary (it should be different from the first move though)
     const three_moves_initial_game = new Game()
     three_moves_initial_game.add_move(move, next)
     expect(three_moves_initial_game.move_is_legal(next2)).toBe(true)
@@ -33,8 +33,8 @@ describe("a game", () => {
     expect(wrong_game.move_is_legal(next2)).toBe(false)
   })
   it("a move can only be played once", () => {
-    const move = [Coord.MID, Coord.TOP_LEFT]
-    const next = [Coord.TOP_LEFT, Coord.MID]
+    const move = [4, 0]
+    const next = [0, 4]
     const next2 = move
     const initial_game = new Game()
     initial_game.add_move(move, next)
@@ -67,6 +67,8 @@ describe("a game", () => {
   })
   it('a full grid is a draw',() => {
     const initial_game = new Game()
+    // in this case it's actually a won, too long to write down the list of moves for a draw. Note that the variant allowing to keep filling a grid after
+    // it was won is sub-optimal as it allows the starting player to always win if she plays perfectly
     initial_game.add_move([0,1],[1,0],[0,4],[4,0],[0,7],[7,0],[0,2],[2,0],[0,3],[3,0],[0,5],[5,0],[0,6],[6,0],[0,8],[8,0],[0,0])
     expect(initial_game.grid_is_full(0)).toBe(true)
     expect(initial_game.grid_is_full(1)).toBe(false)

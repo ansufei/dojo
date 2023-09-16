@@ -3,7 +3,7 @@
   - [ ] fini
     - [x] gagné
     - [x] perdu
-    - [ ] draw
+    - [x] draw
 - déterminer l'état du jeu
   - [ ] en cours
   - [ ] fini

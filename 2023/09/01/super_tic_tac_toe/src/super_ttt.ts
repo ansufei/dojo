@@ -1,17 +1,4 @@
-export enum Coord {
-    TOP_LEFT,
-    TOP_MID,
-    TOP_RIGHT,
-    MID_LEFT,
-    MID,
-    MID_RIGHT,
-    BOTTOM_LEFT,
-    BOTTOM_MID,
-    BOTTOM_RIGHT,
-    EMPTY
-  }
 
-  
 export class Game {
 moves
 map_moves
@@ -40,7 +27,7 @@ populate_grid(grid, value){
 add_move(...moves) {
     // mapping completion of small grids (keys are the big grids)
     if (moves.length == 0) return this.map_moves
-    else if (moves[0] == Coord.EMPTY) return this.map_moves
+    else if (moves[0].length == 0) return this.map_moves
     else {
         moves.forEach((value, valueIndex) => {
             this.player = (valueIndex % 2 == 0) ? 'crosses' : 'noughts'
@@ -105,9 +92,9 @@ game_is_won() {
     return false
 }
 
-move_is_legal(move = [Coord.EMPTY,Coord.EMPTY]) {
+move_is_legal(move = Array()) {
     // an empty move is legal
-    if (move[0] == Coord.EMPTY) return true
+    if (move.length == 0) return true
 
     // no move is played more than once
     if (this.map_moves.has(move[0])) {

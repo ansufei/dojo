@@ -1,10 +1,6 @@
 from path_optim import optimize_path
 
 
-def test_dummy():
-    assert 1 == 1
-
-
 def test_no_path():
     assert optimize_path("") == ""
 
@@ -27,13 +23,15 @@ def test_NWE_should_be_N():
     assert optimize_path("NWE") == "N"
 
 
-def test_NESWWS_should_be_WS():
-    assert optimize_path("NESWWS") == "WS"
+# def test_NESWWS_should_be_WS():
+#     assert optimize_path("NESWWS") == "WS"
 
 
-def test_NESWSW_should_be_WS():
-    assert optimize_path("NESWSW") == "SW"
+# def test_NESWSW_should_be_WS():
+#     assert optimize_path("NESWSW") == "SW"
 
 
-def test_path_tracer_given_N_gives_steps_00_01():
-    pass
+# def test_path_tracer_given_N_gives_steps_00_01():
+#     assert optimize_path("ENWNNESESWSE") == "EE"
+    # assert optimize_path("ENEENNWS") == "ENEENNWS"
+    

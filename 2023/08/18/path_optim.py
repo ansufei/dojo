@@ -32,4 +32,18 @@ def simplify_directions(pair):
         return pair
 
 def optimize_path(path):
-    return simplify_directions(path)
+    if len(path) <= 2:
+        return simplify_directions(path)
+    split_path = [path[i] + path[i+1] for i in range(len(path) - 1)]
+    simplify = []
+    for i, pair in enumerate(split_path):
+        cut_loops = simplify_directions(pair)
+        if (cut_loops == pair):
+            simplify.append(pair)
+        else:
+            if i == 0:
+                simplify.append(pair)
+            else:
+                simplify[i-1] = simplify[i-1][0]
+                simplify.append(cut_loops)
+    return ''.join(simplify)

@@ -23,8 +23,8 @@ def test_NWE_should_be_N():
     assert optimize_path("NWE") == "N"
 
 
-# def test_NESWWS_should_be_WS():
-#     assert optimize_path("NESWWS") == "WS"
+def test_NESWWS_should_be_WS():
+    assert optimize_path("NESWWS") == "WS"
 
 
 # def test_NESWSW_should_be_WS():

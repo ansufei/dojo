@@ -24,14 +24,14 @@ def test_NWE_should_be_N():
 
 
 def test_NESWWS_should_be_WS():
-    assert optimize_path("NESWWS") == "WS"
+    assert optimize_path("NESWWS") == "WS" # loop from the point of origin
 
 
 def test_NESWSW_should_be_WS():
     assert optimize_path("NESWSW") == "SW"
 
 
-# def test_path_tracer_given_N_gives_steps_00_01():
-#     assert optimize_path("ENWNNESESWSE") == "EE"
-    # assert optimize_path("ENEENNWS") == "ENEENNWS"
+def test_path_tracer_given_N_gives_steps_00_01(): # loop anywhere in the path
+    assert optimize_path("ENWNNESESWSE") == "EE"
+    assert optimize_path("ENEENNWS") == "ENEENNWS"
     

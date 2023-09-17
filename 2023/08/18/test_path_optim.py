@@ -1,10 +1,6 @@
 from path_optim import optimize_path
 
 
-def test_dummy():
-    assert 1 == 1
-
-
 def test_no_path():
     assert optimize_path("") == ""
 
@@ -28,12 +24,20 @@ def test_NWE_should_be_N():
 
 
 def test_NESWWS_should_be_WS():
-    assert optimize_path("NESWWS") == "WS"
+    assert optimize_path("NESWWS") == "WS" # loop from the point of origin
 
 
 def test_NESWSW_should_be_WS():
     assert optimize_path("NESWSW") == "SW"
 
 
-def test_path_tracer_given_N_gives_steps_00_01():
-    pass
+def test_path_tracer_given_N_gives_steps_00_01(): # loop anywhere in the path
+    assert optimize_path("ENWNNESESWSE") == "EE" # 1 bidirectional move = consecutive cancelations
+    assert optimize_path("ENEENNWS") == "ENEENNWS"
+    
+
+def test_two_loops():
+    assert optimize_path("NESWWSEN") == ""
+    assert optimize_path("ENWSEENNWWSSW") == "W" 
+    assert optimize_path("EENESWSWSWSENE") == "EESWSE" # overlapping loops
+    

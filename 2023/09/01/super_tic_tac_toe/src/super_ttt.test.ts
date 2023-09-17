@@ -45,11 +45,16 @@ describe("a game", () => {
     initial_game.add_move([0,1],[1,0],[0,4],[4,0],[0,7],[7,0])
     expect(initial_game.move_is_legal([3,0])).toBe(true)
   })
-  it("the next move can be anywhere free if the grid pointed by last move is full", () => {
+  it("a move can not be on a previously won/lost grid", () => {
     const initial_game = new Game()
-    initial_game.add_move([0,1],[1,0],[0,4],[4,0],[0,7],[7,0],[0,2],[2,0],[0,3],[3,0],[0,5],[5,0],[0,6],[6,0],[0,8],[8,0],[0,0])
-    expect(initial_game.move_is_legal([2,2])).toBe(true)
-    expect(initial_game.grid_is_full(0)).toBe(true)
+    initial_game.add_move([0,1],[1,0],[0,4],[4,0],[0,7],[7,0],[3,0])
+    expect(initial_game.move_is_legal([0,2])).toBe(false)
+  })
+  it("the next move can be anywhere free if the grid pointed by last move is a draw", () => {
+    const initial_game = new Game()
+    initial_game.add_move([4,1],[1,4],[4,2],[2,2],[2,4],[4,0],[0,4],[4,5],[5,4],[4,6],[6,0],[0,3],[3,3],[3,4],[4,3],[3,6],[6,4],[4,7],[7,4],[4,4],[4,8],[8,4])
+    expect(initial_game.grid_is_full(4)).toBe(true)
+    expect(initial_game.move_is_legal([2,7])).toBe(true)
   })
   it('correct player should play next',() => {
     //by convention crosses plays first
@@ -65,18 +70,10 @@ describe("a game", () => {
     expect(initial_game.grid_is_won(1,'crosses')).toBe(false)
     expect(initial_game.grid_is_won(1,'noughts')).toBe(false)
   })
-  it('a full sub grid is a draw',() => {
-    const initial_game = new Game()
-    // in this case it's actually a won, too long to write down the list of moves for a draw. Note that the variant allowing to keep filling a grid after
-    // it was won is sub-optimal as it allows the starting player to always win if she plays perfectly
-    initial_game.add_move([0,1],[1,0],[0,4],[4,0],[0,7],[7,0],[0,2],[2,0],[0,3],[3,0],[0,5],[5,0],[0,6],[6,0],[0,8],[8,0],[0,0])
-    expect(initial_game.grid_is_full(0)).toBe(true)
-    expect(initial_game.grid_is_full(1)).toBe(false)
-  })
-  it('a game with more than 50% wins is won',() => {
+  it('a game with 3 aligned wins is won',() => {
     const initial_game = new Game()
     initial_game.add_move([4,1],[1,8],[8,5],[5,3],[3,7],[7,3],[3,1],[1,4],[4,7],[7,6],[6,3],[3,4],[4,4]) // crosses wins in grid 4
-    initial_game.add_move([1,0],[0,3],[3,2],[2,5],[5,5],[5,8],[8,0],[0,5],[5,4],[0,4],[7,0],[8,3],[3,6]) // noughts lost or draw
+    initial_game.add_move([1,0],[0,3],[3,2],[2,5],[5,5],[5,8],[8,0],[0,5],[5,4],[0,4],[7,0],[8,3],[3,6]) // noughts will loose the game or draw
     initial_game.add_move([6,2],[2,6],[6,6],[6,0],[8,4]) // crosses wins the game
     expect(initial_game.grid_is_won(4,'crosses')).toBe(true)
     expect(initial_game.grid_is_won(1,'noughts')).toBe(true)

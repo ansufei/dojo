@@ -1,7 +1,6 @@
 /* TO DO:
-- stop players from using a won sub-grid
-- a player can choose which sub-grid to play only the adversary points to a grid that she (the player) already won, not any won grid?
 - refactor this.player
+- calculate draw game
 */
 
 export class Game {
@@ -49,6 +48,7 @@ grid_is_full(grid) {
         }
         return true 
     }
+    if (length_grid)
     return false
 }
 
@@ -77,8 +77,7 @@ grid_is_won(grid,player) {
     return false
 }
 
-game_is_won(player) {
-    console.log(this.results)
+game_is_won(player = this.player) {
     //let translate_results = new Array();
     let player_results = new Map([...this.results].filter(([k,v]) => v == player))
     let moves_player = Array.from(player_results.keys() );
@@ -101,6 +100,9 @@ move_is_legal(move = Array()) {
             return false
         // the sub-grid referred to in the last move was won, free to choose any grid (including a won grid if not full, even if counterproductive)
         } else if (this.results.has(this.moves.at(-1)[1])) {
+            if (this.results.has(move[0])) {
+                return false
+            }
             return true
         } else {
             return move[0] == this.moves.at(-1)[1]
@@ -126,7 +128,7 @@ add_move(...moves) {
                 this.grid_is_won(value[0],this.player) 
 
                 // check if game won
-                this.game_is_won(this.player)
+                this.game_is_won()
                     
             } else {
                 console.log(value, 'is not a legal move here')

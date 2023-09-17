@@ -1,5 +1,4 @@
 /* TO DO:
-- refactor this.player
 - calculate draw game
 */
 
@@ -82,9 +81,12 @@ grid_is_won(grid,player) {
 }
 
 game_is_won(player = this.player) {
-    //let translate_results = new Array();
+    // as a simplification, the game is a draw when there is no move left and neither of the players has won
     let player_results = new Map([...this.results].filter(([k,v]) => v == player))
     let moves_player = Array.from(player_results.keys() );
+    if (this.calc_won(moves_player)){
+        console.log(player, 'wins!')
+    }
     return this.calc_won(moves_player)
 }
 

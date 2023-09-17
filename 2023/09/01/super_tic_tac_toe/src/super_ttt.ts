@@ -14,7 +14,7 @@ constructor() {
     this.map_moves.set('crosses', new Map())
     this.map_moves.set('noughts', new Map())
     this.results = new Map();
-    this.player = 'crosses';
+    this.player = this.whose_turn();
 }
 
 populate_grid(grid, value){
@@ -33,18 +33,22 @@ whose_turn() {
 }
 
 grid_is_full(grid) {
-    let length_grid = 0;
+    let length_crosses;
+    let length_noughts;
     if (this.map_moves.get('crosses').has(grid)) {
-        length_grid += this.map_moves.get('crosses').get(grid).length
+        length_crosses = this.map_moves.get('crosses').get(grid).length
     }
     if (this.map_moves.get('noughts').has(grid)) {
-        length_grid += this.map_moves.get('noughts').get(grid).length
+        length_noughts = this.map_moves.get('noughts').get(grid).length
     }
+    let length_grid = length_crosses + length_noughts
     if (length_grid == 9) {
         if (this.results.has(grid)) {
             this.grid_is_won(grid,this.player)
         } else {
-            this.results.set(grid,'draw')
+            // on sub grids, a draw is a win for the player with most marks
+            let draw = (length_crosses > length_grid) ? 'crosses' : 'noughts'
+            this.results.set(grid,draw)
         }
         return true 
     }

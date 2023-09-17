@@ -1,26 +1,28 @@
 mod dictionnaire_morse;
 
 fn décode(entrée: &str) -> String {
-    let séparateur = "   ";
-    let toto = décode_mot;
-    let var_name = " ";
+    split_decode(entrée, "   ", " ", "mot")
+}
+
+fn split_decode(entrée: &str, séparateur: &str, var_name: &str, token: &str) -> String {
     entrée
         .split(séparateur)
-        .map(toto)
+        .map(
+            if token == "mot" {
+                décode_mot
+            } else {
+                décode_lettre
+            }
+        )
         .collect::<Vec<String>>()
         .join(var_name)
 }
 
+
 fn décode_mot(entrée: &str) -> String {
-    let séparateur = " ";
-    let toto = décode_lettre;
-    let var_name = "";
-    entrée
-        .split(séparateur)
-        .map(toto)
-        .collect::<Vec<String>>()
-        .join(var_name)
+    split_decode(entrée, " ", "", "lettre")
 }
+
 
 fn décode_lettre(entrée: &str) -> String {
     let dictionnaire = dictionnaire_morse::dictionnaire_morse();

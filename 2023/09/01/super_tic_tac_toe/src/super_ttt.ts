@@ -1,7 +1,3 @@
-/* TO DO:
-- calculate draw game
-*/
-
 export class Game {
 moves
 map_moves

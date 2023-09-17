@@ -1,11 +1,16 @@
+- déterminer l'état d'une sous-grille
+  - [ ] en cours
+  - [ ] fini
+    - [x] gagné/perdu
+    - [ ] draw
 - déterminer l'état du jeu
   - [ ] en cours
   - [ ] fini
-    - [ ] gagné
-    - [ ] perdu
+    - [ ] gagné/perdu
     - [ ] draw
 - déterminer si une liste de coup est légale
   - [x] 2 coups au meme endroit
-  - [ ] coup qui ne respecte pas le coup précédent
-  - [ ] coup libre lorsque une sous grille est finie
-- alternance des joueurs
+  - [x] coup qui ne respecte pas le coup précédent
+  - [x] coup libre lorsqu' une sous-grille est finie
+  - [x] coup libre lorsqu'une sous-grille est gagnée
+- [x] alternance des joueurs (à qui le tour)

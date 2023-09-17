@@ -1,5 +1,4 @@
-import { hello } from "./hello"
+import { Game, Coord } from "./super_ttt"
 
-const name = process.argv.at(2) || undefined
 
-console.log(hello(name))
+

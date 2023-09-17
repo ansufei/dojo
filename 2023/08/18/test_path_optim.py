@@ -32,6 +32,12 @@ def test_NESWSW_should_be_WS():
 
 
 def test_path_tracer_given_N_gives_steps_00_01(): # loop anywhere in the path
-    assert optimize_path("ENWNNESESWSE") == "EE"
+    assert optimize_path("ENWNNESESWSE") == "EE" # 1 bidirectional move = consecutive cancelations
     assert optimize_path("ENEENNWS") == "ENEENNWS"
+    
+
+def test_two_loops():
+    assert optimize_path("NESWWSEN") == ""
+    assert optimize_path("ENWSEENNWWSSW") == "W" 
+    assert optimize_path("EENESWSWSWSENE") == "EESWSE" # overlapping loops
     

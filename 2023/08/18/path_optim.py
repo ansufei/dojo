@@ -23,17 +23,42 @@ from collections import Counter
 #         final_path += netNS * "N"
 
 #     return final_path
-
+map_directions = {'N':[-1,0],
+                    'S':[1,0],
+                    'E':[0,1],
+                    'W':[0,-1]}
 
 def simplify_directions(pair):
     if pair in ['NS','SN','WE','EW']:
         return ""
     else:
         return pair
+    
+def check_for_loops(result, move):
+        flag_erase_loop = False
+        result[1] += move[1]
+        result[0] += move[0]
+        if result == [0,0]:
+             flag_erase_loop =  True
+        return flag_erase_loop, result
+                 
+def translate_from_path(path):
+    return [map_directions[move] for move in path]
 
 def optimize_path(path):
+    # treat directly trivial cases
     if len(path) <= 2:
         return simplify_directions(path)
+    
+    # manage loops
+    translated_path = translate_from_path(path)
+    result = translated_path[0]
+    for i, move in enumerate(translated_path[1:]):
+        flag_erase_loop, result = check_for_loops(result, move)
+        if flag_erase_loop == True:
+            path = path[i+2:]
+    
+    # remove side by side opposites
     split_path = [path[i] + path[i+1] for i in range(len(path) - 1)]
     simplify = []
     for i, pair in enumerate(split_path):

@@ -27,8 +27,8 @@ def test_NESWWS_should_be_WS():
     assert optimize_path("NESWWS") == "WS"
 
 
-# def test_NESWSW_should_be_WS():
-#     assert optimize_path("NESWSW") == "SW"
+def test_NESWSW_should_be_WS():
+    assert optimize_path("NESWSW") == "SW"
 
 
 # def test_path_tracer_given_N_gives_steps_00_01():

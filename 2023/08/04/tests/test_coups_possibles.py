@@ -1,6 +1,3 @@
-from dataclasses import dataclass
-from typing import Tuple
-
 from coups_possibles import Rook, ChessGrid, MoveManager
 
 def test_position_of_all_pieces():
@@ -33,11 +30,20 @@ def test_possible_moves_white_rook():
     assert rook.mouvements_possibles() == [(2,8),(3,8),(4,8),(5,8),(6,8),(7,8),(8,8),(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7)]
     
 
-def test_possible_strikes_white_rook():
+def test_possible_strikes_rook_top_left_corner():
     grid = ChessGrid({'white':{'King':[(5,8)],'Queen':[(2,6)],'Knight':[(2,8),(5,6)],'Rook':[(1,8),(6,8)],'Bishop':[(3,8)]},
                       'black':{'King':[(3,1)],'Queen':[(4,2)],'Knight':[(7,1),(3,3)],'Rook':[(4,1),(8,1)],'Bishop':[(5,2)]}})
     position = grid.positions['white']['Rook'][0]
     rook = Rook(position, 'white')
     strikes = MoveManager('Rook', rook, grid)
     assert strikes.coups_possibles() == [(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7)]
+
+
+def test_possible_strikes_rook_other_position():
+    grid = ChessGrid({'white':{'King':[(5,8)],'Queen':[(2,6)],'Knight':[(2,8),(5,6)],'Rook':[(1,8),(6,8)],'Bishop':[(3,8)]},
+                      'black':{'King':[(3,1)],'Queen':[(4,2)],'Knight':[(7,1),(3,3)],'Rook':[(4,1),(8,1)],'Bishop':[(5,2)]}})
+    position = grid.positions['black']['Rook'][0]
+    rook = Rook(position, 'black')
+    strikes = MoveManager('Rook', rook, grid)
+    assert strikes.coups_possibles() == [(5,1),(6,1)]
 

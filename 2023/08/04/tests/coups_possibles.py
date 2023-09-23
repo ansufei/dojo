@@ -51,21 +51,19 @@ class MoveManager:
         # obstacles
         if self.piece_name == 'Rook':
             obstacles = [x for x in moves if x in positions]
-            obstacles_x = [x for x in obstacles if x[0] == self.piece.position[0]]
-            moves_x = [x for x in moves if x[0] == self.piece.position[0]]
-            if len(obstacles_x) > 0:
-                min_obstacles_x = min([x[1] for x in obstacles_x])
-                result.append([x for x in moves_x if x[1] < min_obstacles_x])
-            elif len(moves_x) > 0:
-                result += moves_x
-            obstacles_y = [x for x in obstacles if x[1] == self.piece.position[1]]
-            min_obstacles_y = min([x[0] for x in obstacles_y])
-            if len(obstacles_y) > 0:
-                moves_y = [x for x in moves if x[1] == self.piece.position[1]]
-                filtered_moves_y = [x for x in moves_y if x[0] < min_obstacles_y]
-                if len(filtered_moves_y) > 0:
-                    result.append(filtered_moves_y)
-            elif len(moves_y) > 0:
-                result += moves_y
+            for i in [0,1]:
+                print(i)
+                obstacles_i = [x for x in obstacles if x[i] == self.piece.position[i]]
+                moves_i = [x for x in moves if x[i] == self.piece.position[i]]
+                obstacles_before = [x for x in obstacles if x[i] < self.piece.position[i]]
+                if len(obstacles_before) > 0:
+                    print('obstacles_before', obstacles_before[0])
+                    result += [x for x in moves_i if x[1-i] < obstacles_before[0][1-i]]
+                obstacles_after = [x for x in obstacles if x[i] > self.piece.position[i]]
+                if len(obstacles_after) > 0:
+                    print('obstacles_after', obstacles_after[0])
+                    print(obstacles_after)
+                    result += [x for x in moves_i if x[1-i] < obstacles_after[0][1-i]]
+            print(result)
             return  result
     

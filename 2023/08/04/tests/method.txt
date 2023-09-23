@@ -1,0 +1,9 @@
+1st methode
+* create a class Grid that will be called by all the pieces
+* the coups possibles function takes a piece and matches its positions against all the obstacles on its ways, given its possible mouvements
+* to solve for all the pieces, call the class for each piece and return their specific possible mouvements
+
+2nd method (attempted in dojo)
+* only create classes for pieces
+* calculate possible moves same as in the 1st method
+* calculate coups possibles by feeding the piece, the chess grid that contains obstacles, 

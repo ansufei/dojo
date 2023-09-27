@@ -1,11 +1,25 @@
-Prochaine session : le  à 
+Prochaine session : le 13/09 à CodeWorks 25 Bvd des Italiens
 
 Personnes présentes :
-- 
+- Jacques
+- Olivier
+- Pin
+- Lucas
+- ToF
+- Alexandre
+- Anne-Sophie
+- Emmanuel
+- Hervé
 
 Retro :
 - Super Tic Tac Toe (focus logic) - TypeScript - TCRDD Randori
-  - 
+  - Randori c'est chouette
+  - Un probleme plus simple est preferable pour le randori
+  - ça devient frustant d'etre plein d'essayer de résoudre le problème
+  - Le Kata était peut-etre trop ouvert
+  - On avait beaucoup de monde mais peu de participants actifs
+  - Une Todo list à été faite en fin de séance mais à été ignorée
+  - Un Kata qui m'était en valeur l'approche TDD
 
 Explication des règles :
 - Tout le monde peut proposer un sujet
@@ -17,9 +31,12 @@ Le **but** est d'**apprendre**, si possible en s'amusant ;
 Le but n'est **pas de finir**
 
 Sujets :
-- 0 - A - 
-- 0 - B - 
-- 0 - C - 
+- 13 - A - Interpreter d'expresion en RPN - Python - Mob
+- 9 - B - Tic Tac Toe evaluer le resultat d' une grille - TS - Strong Styled Randori TCRDD
+- 0 - C - Interpreter d'expresion en RPN - Haskell - Mob
+- 9 - D - Chinese Numeral - Rust - Mob
+- 7 - E - Interpreter d'expresion en RPN - Rust - Mob
+- 9 - F - Git Gamble issues - Rust - TCRDD
 
 Modes de fonctionnement habituels :
 - Mob : 1 typist + les autres naviguent

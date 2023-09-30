@@ -25,16 +25,39 @@ class Rook(Piece):
     def mouvements_possibles(self):
         return [(col, self.position[1]) for col in range(1, 9) if col != self.position[0]] \
     + [(self.position[0], line) for line in range(1, 9) if line != self.position[1]]
-    
+
 @dataclass
-class King(Piece):
+class Bishop(Piece):
     position: Tuple
     color: str
-    can_castle: bool
     
     def mouvements_possibles(self):
-        return [(col, self.position[1]) for col in range(1, 9) if col != self.position[0]] \
-    + [(self.position[0], line) for line in range(1, 9) if line != self.position[1]]
+    #     return [(col, self.position[1]) for col in range(1, 9) if col != self.position[0]] \
+    # + [(self.position[0], line) for line in range(1, 9) if line != self.position[1]]
+        row, col = self.position[0], self.position[1]
+        # bottom right diagonal
+        result = [(row + i, col - i) for i in range(1, 9) if (row + i < 9) & (col - i > 0)] 
+        # bottom left diagonal
+        result += [(row - i, col - i) for i in range(1, 9) if (row - i > 0) & (col - i > 0)]
+        print(result)
+        for i in range(1,9):
+            if (row - i > 0) & (col + i < 9):
+                print(row-i, col-i)
+            if (col + i < 9):
+                print(row-i, col-i)
+        #print(result)
+        return result
+    # [(4, 7), (5, 6), (6, 5), (7, 4), (8, 3), (2, 7), (1, 6)]
+
+# @dataclass
+# class King(Piece):
+#     position: Tuple
+#     color: str
+#     can_castle: bool
+    
+#     def mouvements_possibles(self):
+#         return [(col, self.position[1]) for col in range(1, 9) if col != self.position[0]] \
+#     + [(self.position[0], line) for line in range(1, 9) if line != self.position[1]]
 
 @dataclass
 class MoveManager:
@@ -49,7 +72,7 @@ class MoveManager:
         # obstacles: positions of all the other pieces that match with moves
         positions = self.grid.flatten_positions()
         # obstacles
-        if self.piece_name == 'Rook':
+        if self.piece_name in ('Rook', 'Bishop'):
             obstacles = [x for x in moves if x in positions]
             for i in [0,1]:
                 to_remove = []
@@ -62,4 +85,6 @@ class MoveManager:
                     to_remove += [x for x in moves_i if x[1-i] >= obstacles_after[0][1-i]]
                 result += [x for x in moves_i if not x in to_remove]
             return  result
+        #elif self.piece_name == 'Bishop':
+
     

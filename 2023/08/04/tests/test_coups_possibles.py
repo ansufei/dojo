@@ -54,6 +54,11 @@ def test_possible_moves_bishop():
     bishop = Bishop((3, 8), 'white')
     assert bishop.mouvements_possibles() == [(4, 7), (5, 6), (6, 5), (7, 4), (8, 3), (2, 7), (1, 6)]
     bishop1 = Bishop((5, 2), 'black')
-    assert bishop1.mouvements_possibles() == [(6, 1), (4, 1)]
+    assert bishop1.mouvements_possibles() == [(6, 1), (4, 1), (6, 3), (7, 4), (8, 5), (4, 3), (3, 4), (2, 5), (1, 6)]
 
+def test_possible_strikes_bishop(grid):
+    position = grid.positions['white']['Bishop'][0] # (3,8)
+    bishop = Bishop(position, 'white')
+    strikes = MoveManager('Bishop', bishop, grid)
+    assert strikes.coups_possibles() == [(4, 7), (2, 7), (1, 6)]
 

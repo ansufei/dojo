@@ -32,22 +32,16 @@ class Bishop(Piece):
     color: str
     
     def mouvements_possibles(self):
-    #     return [(col, self.position[1]) for col in range(1, 9) if col != self.position[0]] \
-    # + [(self.position[0], line) for line in range(1, 9) if line != self.position[1]]
         row, col = self.position[0], self.position[1]
         # bottom right diagonal
         result = [(row + i, col - i) for i in range(1, 9) if (row + i < 9) & (col - i > 0)] 
         # bottom left diagonal
         result += [(row - i, col - i) for i in range(1, 9) if (row - i > 0) & (col - i > 0)]
-        print(result)
-        for i in range(1,9):
-            if (row - i > 0) & (col + i < 9):
-                print(row-i, col-i)
-            if (col + i < 9):
-                print(row-i, col-i)
-        #print(result)
+        # top right diagonal
+        result += [(row + i, col + i) for i in range(1, 9) if (row + i < 9) & (col + i < 9)]
+        # top left diagonal
+        result += [(row - i, col + i) for i in range(1, 9) if (row - i > 0) & (col + i < 9)]
         return result
-    # [(4, 7), (5, 6), (6, 5), (7, 4), (8, 3), (2, 7), (1, 6)]
 
 # @dataclass
 # class King(Piece):
@@ -72,7 +66,7 @@ class MoveManager:
         # obstacles: positions of all the other pieces that match with moves
         positions = self.grid.flatten_positions()
         # obstacles
-        if self.piece_name in ('Rook', 'Bishop'):
+        if self.piece_name == 'Rook':
             obstacles = [x for x in moves if x in positions]
             for i in [0,1]:
                 to_remove = []
@@ -85,6 +79,36 @@ class MoveManager:
                     to_remove += [x for x in moves_i if x[1-i] >= obstacles_after[0][1-i]]
                 result += [x for x in moves_i if not x in to_remove]
             return  result
-        #elif self.piece_name == 'Bishop':
-
-    
+        elif self.piece_name == 'Bishop':
+            obstacles = [x for x in moves if x in positions]
+            row, col = self.piece.position[0], self.piece.position[1]
+            # bottom right diagonal
+            moves_bottom_right = [(row + i, col - i) for i in range(1, 9) if (row + i < 9) & (col - i > 0)] 
+            if any(map(lambda v: v in obstacles, moves_bottom_right)):
+                stop = min(set(moves_bottom_right).intersection(obstacles))
+                result += moves_bottom_right[:moves_bottom_right.index(stop)]
+            else:
+                result += moves_bottom_right
+            # bottom left diagonal
+            moves_bottom_left = [(row - i, col - i) for i in range(1, 9) if (row - i > 0) & (col - i > 0)]
+            print(moves_bottom_left)
+            if any(map(lambda v: v in obstacles, moves_bottom_left)):
+                stop = min(set(moves_bottom_left).intersection(obstacles))
+                result += moves_bottom_left[:moves_bottom_left.index(stop)]
+            else:
+                result += moves_bottom_left
+            # top right diagonal
+            moves_top_right = [(row + i, col + i) for i in range(1, 9) if (row + i < 9) & (col + i < 9)]
+            if any(map(lambda v: v in obstacles, moves_top_right)):
+                stop = min(set(moves_top_right).intersection(obstacles))
+                result += moves_top_right[:moves_top_right.index(stop)]
+            else:
+                result += moves_top_right
+            # top left diagonal
+            moves_top_left = [(row - i, col + i) for i in range(1, 9) if (row - i > 0) & (col + i < 9)]
+            if any(map(lambda v: v in obstacles, moves_top_left)):
+                stop = min(set(moves_top_left).intersection(obstacles))
+                result += moves_top_left[:moves_top_left.index(stop)]
+            else:
+                result += moves_top_left
+            return  result

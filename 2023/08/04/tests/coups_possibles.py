@@ -52,18 +52,19 @@ class MoveManager:
         if self.piece_name == 'Rook':
             obstacles = [x for x in moves if x in positions]
             for i in [0,1]:
+                to_remove = []
                 print(i)
-                obstacles_i = [x for x in obstacles if x[i] == self.piece.position[i]]
-                moves_i = [x for x in moves if x[i] == self.piece.position[i]]
-                obstacles_before = [x for x in obstacles if x[i] < self.piece.position[i]]
+                moves_i = [x for x in moves if x[i] == self.piece.position[i]] # cells sharing the same: 0/ x i.e. column 1/ y i.e. line
+                print(moves_i)
+                obstacles_before = [x for x in obstacles if x[1-i] < self.piece.position[1-i]] # compare the 0/ y to the y or 1/ x to the x of the piece
                 if len(obstacles_before) > 0:
-                    print('obstacles_before', obstacles_before[0])
-                    result += [x for x in moves_i if x[1-i] < obstacles_before[0][1-i]]
-                obstacles_after = [x for x in obstacles if x[i] > self.piece.position[i]]
+                    to_remove += [x for x in moves_i if x[1-i] <= obstacles_before[0][1-i]] # 
+                    print('to remove before', to_remove)
+                obstacles_after = [x for x in obstacles if x[1-i] > self.piece.position[1-i]]
                 if len(obstacles_after) > 0:
-                    print('obstacles_after', obstacles_after[0])
-                    print(obstacles_after)
-                    result += [x for x in moves_i if x[1-i] < obstacles_after[0][1-i]]
-            print(result)
+                    to_remove += [x for x in moves_i if x[1-i] >= obstacles_after[0][1-i]]
+                    print('to remove after', to_remove)
+                result += [x for x in moves_i if not x in to_remove]
+                print('result', result)
             return  result
     

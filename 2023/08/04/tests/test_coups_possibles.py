@@ -46,4 +46,8 @@ def test_possible_strikes_rook_other_position():
     rook = Rook(position, 'black')
     strikes = MoveManager('Rook', rook, grid)
     assert strikes.coups_possibles() == [(5,1),(6,1)]
+    position2 = grid.positions['white']['Rook'][1]
+    rook2 = Rook(position2, 'white')
+    strikes2 = MoveManager('Rook', rook2, grid)
+    assert strikes2.coups_possibles() == [(6,1),(6,2),(6,3),(6,4),(6,5),(6,6),(6,7),(7,8),(8,8)]
 

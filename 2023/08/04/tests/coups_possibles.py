@@ -82,33 +82,16 @@ class MoveManager:
         elif self.piece_name == 'Bishop':
             obstacles = [x for x in moves if x in positions]
             row, col = self.piece.position[0], self.piece.position[1]
-            # bottom right diagonal
-            moves_bottom_right = [(row + i, col - i) for i in range(1, 9) if (row + i < 9) & (col - i > 0)] 
-            if any(map(lambda v: v in obstacles, moves_bottom_right)):
-                stop = min(set(moves_bottom_right).intersection(obstacles))
-                result += moves_bottom_right[:moves_bottom_right.index(stop)]
-            else:
-                result += moves_bottom_right
-            # bottom left diagonal
-            moves_bottom_left = [(row - i, col - i) for i in range(1, 9) if (row - i > 0) & (col - i > 0)]
-            print(moves_bottom_left)
-            if any(map(lambda v: v in obstacles, moves_bottom_left)):
-                stop = min(set(moves_bottom_left).intersection(obstacles))
-                result += moves_bottom_left[:moves_bottom_left.index(stop)]
-            else:
-                result += moves_bottom_left
-            # top right diagonal
-            moves_top_right = [(row + i, col + i) for i in range(1, 9) if (row + i < 9) & (col + i < 9)]
-            if any(map(lambda v: v in obstacles, moves_top_right)):
-                stop = min(set(moves_top_right).intersection(obstacles))
-                result += moves_top_right[:moves_top_right.index(stop)]
-            else:
-                result += moves_top_right
-            # top left diagonal
-            moves_top_left = [(row - i, col + i) for i in range(1, 9) if (row - i > 0) & (col + i < 9)]
-            if any(map(lambda v: v in obstacles, moves_top_left)):
-                stop = min(set(moves_top_left).intersection(obstacles))
-                result += moves_top_left[:moves_top_left.index(stop)]
-            else:
-                result += moves_top_left
+            moves_bottom_right = [(row + i, col - i) for i in range(1, 9) if (row + i < 9) & (col - i > 0)] # bottom right diagonal
+            moves_bottom_left = [(row - i, col - i) for i in range(1, 9) if (row - i > 0) & (col - i > 0)] # bottom left diagonal
+            moves_top_right = [(row + i, col + i) for i in range(1, 9) if (row + i < 9) & (col + i < 9)]  # top right diagonal
+            moves_top_left = [(row - i, col + i) for i in range(1, 9) if (row - i > 0) & (col + i < 9)] # top left diagonal
+
+            for moves in [moves_bottom_right, moves_bottom_left, moves_top_right, moves_top_left]:
+                if any(map(lambda v: v in obstacles, moves)):
+                    stop = min(set(moves).intersection(obstacles))
+                    result += moves[:moves.index(stop)]
+                else:
+                    result += moves
+            
             return  result
